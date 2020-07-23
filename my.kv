@@ -1,0 +1,127 @@
+<Ball>:
+    size: 50,50
+    canvas:
+        Ellipse:
+            pos: self.pos
+            size: self.size
+
+<Paddle>:
+    size: 20,200
+    canvas:
+        Rectangle:
+            pos:self.pos
+            size:self.size
+
+
+<PongGame>:
+    left:left_player
+    right:right_player
+    ball:moving_ball
+    canvas:
+        Rectangle:
+            pos:self.center_x-5,0
+            size:10,self.height
+
+    Label:
+        text: "Player 1: " + str(root.left.score)
+        font_size: 70
+        center_x: root.width * 1/4
+        top: root.top - 30
+
+    Label:
+        text: "Player 2: " + str(root.right.score)
+        font_size: 70
+        center_x: root.width * 3/4
+        top: root.top - 30
+
+    Ball:
+        id:moving_ball
+        center: self.parent.center
+
+    Paddle:
+        id:left_player
+        x:0
+        center_y:root.center_y
+
+    Paddle:
+        id:right_player
+        x: root.width - self.width
+        center_y:root.center_y
+
+
+
+<WindowManager>
+    id: screen_manager
+
+    Screen:
+        id:screen1
+        name: "home"
+        FloatLayout:
+            Label:
+                text:"Welcome to Pong Game!"
+                font_size: 60
+                pos_hint: {"center_x": 0.5, "center_y": 0.9}
+            Button:
+                text: "Play"
+                size_hint: 0.9,0.2
+                pos_hint: {"center_x": 0.5, "center_y":0.65 }
+                font_size: 60
+                on_release:
+                    root.current="game"
+                    game.serve_ball()
+
+            Button:
+                text: "Rules"
+                size_hint: 0.9,0.2
+                pos_hint: {"center_x": 0.5, "center_y":0.4 }
+                font_size: 60
+                on_release: root.btn_rule()
+
+            Button:
+                text: "Quit"
+                size_hint: 0.9,0.2
+                pos_hint: {"center_x": 0.5, "center_y":0.15 }
+                font_size: 60
+                on_release: app.stop()
+
+
+    Screen:
+        id:screen2
+        name: "game"
+        PongGame:
+            id:game
+
+<Rules>
+    button:button
+    id:rule
+    Label:
+        text: root.txt
+        font_size: 20
+        pos_hint: {"center_x": 0.5,"center_y":0.8}
+
+    Button:
+        id:button
+        text: "Close"
+        font_size: 20
+        size_hint:0.3,0.2
+        pos_hint: {"center_x": 0.5,"center_y":0.2}
+
+<Winner>
+    Label:
+        text: "Player 1 Wins"
+        font_size: 20
+        pos_hint: {"center_x": 0.5,"center_y":0.8}
+
+    Button:
+        text: "End Game"
+        font_size: 20
+        size_hint:0.3,0.2
+        pos_hint: {"center_x": 0.5,"center_y":0.2}
+        on_release: app.stop()
+
+
+
+
+
+
+
